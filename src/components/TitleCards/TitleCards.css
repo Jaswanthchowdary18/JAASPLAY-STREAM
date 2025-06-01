@@ -1,54 +1,344 @@
-.title-cards{
-    margin-top: 50px;
-    margin-bottom: 30px;
+.title-cards {
+  margin-bottom: 3rem;
+  /* Add outline for visual focus when the section itself is tabbed into (optional) */
+  outline: none;
 }
 
-.title-cards h2{
-    margin-bottom: 8px;
+.title-cards:focus-visible {
+  outline: 2px solid #e50914; /* Example focus style for the section */
+  outline-offset: 4px;
 }
 
-.card-list{
-    display: flex;
-    gap: 10px;
-    overflow-x: scroll;
-}
-.card-list::-webkit-scrollbar{
-    display: none;
-}
-
-.card-list img{
-    width: 240px;
-    border-radius: 4px;
-    cursor: pointer;
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-left: 5%;
+  color: #fff;
 }
 
-.card-list .card{
-    position: relative;
+.cards-container {
+  display: flex;
+  gap: 1rem;
+  padding: 0 5%;
+  overflow-x: auto;
+  scroll-behavior: smooth; /* Smooth scrolling for keyboard navigation */
+  scrollbar-width: none;
+  padding-bottom: 1rem;
 }
 
-.card-list .card p{
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    text-decoration: none;
-    color: #fff;
-
+.cards-container::-webkit-scrollbar {
+  display: none;
 }
 
-@media (max-width: 800px){
-    .title-cards{
-        margin-top: 20px;
-        margin-bottom: 0;
-    }
-    .title-cards h2{
-        font-size: 20px;
-    }
-    .card-list img{
-        width: 200px;
-    }
-    .card-list p{
-        font-size: 12px;
-    }
+.movie-card {
+  flex: 0 0 auto;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none; /* Remove default outline */
+}
 
+.movie-card.medium {
+  width: 200px;
+}
 
+/* Add focus style for the currently selected card */
+.movie-card.focused {
+  border: 3px solid #e50914; /* Netflix red border */
+  transform: scale(1.05); /* Slightly enlarge to indicate focus */
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.8); /* Glow effect */
+  z-index: 10; /* Ensure focused card is above others */
+}
+
+.card-image {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+
+/* Show overlay on hover or when card is focused */
+.movie-card:hover .card-overlay,
+.movie-card.focused .card-overlay {
+  opacity: 1;
+}
+
+.movie-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.play-button, .info-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.play-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  gap: 0.5rem;
+}
+
+.play-button:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+.play-icon {
+  font-size: 0.9rem;
+}
+
+.info-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(109, 109, 110, 0.7);
+  color: white;
+}
+
+.info-button:hover {
+  background: rgba(109, 109, 110, 0.9);
+  transform: scale(1.1);
+}
+
+.card-details {
+  padding: 0.75rem 0.25rem;
+}
+
+.movie-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.star-icon {
+  color: #f9cb28;
+}
+
+.card-skeleton {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.card-skeleton.medium {
+  width: 200px;
+  aspect-ratio: 2/3;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.no-results-message, .error-message {
+  text-align: center;
+  color: #aaa;
+  font-size: 1.1rem;
+  padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .movie-card.medium {
+    width: 160px;
+  }
+  
+  .play-button {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 1.1rem;
+  }
+  
+  .movie-card.medium {
+    width: 140px;
+  }
+  
+  .play-button {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .info-button {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Add these new styles to your existing TitleCards.css */
+
+.movie-card {
+  position: relative;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  z-index: 1;
+}
+
+.movie-card:hover, 
+.movie-card.focused {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+.card-info-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #181818;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  transform: translateY(100%);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.movie-card:hover .card-info-panel,
+.movie-card.focused .card-info-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.card-info-header {
+  margin-bottom: 12px;
+}
+
+.card-info-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.card-info-buttons button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: background 0.2s ease;
+}
+
+.card-info-buttons button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.card-info-buttons .play-button {
+  background: white;
+  color: black;
+}
+
+.card-info-buttons .play-button:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.card-info-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #46d369;
+  align-items: center;
+}
+
+.card-info-meta .rating {
+  font-weight: bold;
+}
+
+.card-info-meta .year {
+  color: #999;
+}
+
+.card-info-genres {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.card-info-genres .genre {
+  font-size: 12px;
+  color: #999;
+  border: 1px solid #999;
+  border-radius: 2px;
+  padding: 2px 4px;
+}
+
+.card-info-description {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #fff;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Adjust the card container to account for the expanded info panel */
+.cards-container {
+  padding-bottom: 100px;
+  margin-bottom: -80px;
 }

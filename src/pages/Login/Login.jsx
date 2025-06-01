@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // <-- import useNavigate
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import logo from '../../assets/logo.png';
 import { login, signup } from '../../firebase';
@@ -12,7 +12,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();  // <-- useNavigate hook
+  const navigate = useNavigate();
+
+  const [bgImage, setBgImage] = useState('');
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * 9) + 1;
+    setBgImage(`/logincards/${randomIndex}.jpg`);
+  }, []);
 
   const user_auth = async (event) => {
     event.preventDefault();
@@ -29,7 +36,7 @@ const Login = () => {
     setLoading(false);
 
     if (success) {
-      navigate('/');  // Navigate only after loading ends
+      navigate('/');
     }
   };
 
@@ -38,7 +45,15 @@ const Login = () => {
       <img src={netflix_spinner} className='login-logo' alt='' />
     </div>
   ) : (
-    <div className='login'>
+    <div
+      className='login'
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <img src={logo} className='login-logo' alt='' />
       <div className='login-form'>
         <h1>{signState}</h1>
@@ -61,27 +76,27 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
-            placeholder='Your Password'
+            placeholder='Password'
           />
           <button onClick={user_auth} type='submit'>{signState}</button>
           <div className="form-help">
             <div className="remember">
-              <input type="checkbox" />
-              <label> Remember Me</label>
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Remember me</label>
             </div>
-            <p>Need Help?</p>
+            <a href="#" className="help-link">Need help?</a>
           </div>
         </form>
         <div className="form-switch">
           {signState === "Sign In" ? (
             <p>
-              New to Netflix?{" "}
-              <span onClick={() => setSignState("Sign Up")}>Sign Up Now</span>
+              New here?{" "}
+              <span onClick={() => setSignState("Sign Up")}>Sign up now</span>
             </p>
           ) : (
             <p>
-              Already have account?{" "}
-              <span onClick={() => setSignState("Sign In")}>Sign In Now</span>
+              Already registered?{" "}
+              <span onClick={() => setSignState("Sign In")}>Sign in</span>
             </p>
           )}
         </div>

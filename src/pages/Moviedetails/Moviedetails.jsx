@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './MovieDetails.css';
+import './Moviedetails.css';
 import {
     FaStar,
     FaRegClock,

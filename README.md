@@ -1,16 +1,29 @@
-<<<<<<< HEAD
-# React + Vite
+echo "# JAASPLAY
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+JAASPLAY is a modern, responsive Ott platform built using React and Vite that provides a rich movie streaming experience. It features a sleek user interface, smooth navigation, and dynamic content rendering.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Browse popular, trending, and recommended movies
+- Movie details page with trailers and cast information
+- User authentication and login system
+- Responsive design for all device sizes
+- Fast development with hot module replacement via Vite
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# JETFLIX-Netflix-Clone-
->>>>>>> 3676a2b6d52975087a211ece8e7e22cdec8c575c
+- React (JSX, hooks)
+- Vite (build tool)
+- CSS Modules for scoped styling
+- Git for version control
+
+## Getting Started
+
+click any of the the below links 
+http://jaasplay1.netlify.app
+https://jaasplay-stream.vercel.app/login
+
+
+
+
+" > README.md

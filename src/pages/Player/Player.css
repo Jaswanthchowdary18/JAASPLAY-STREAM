@@ -1,26 +1,92 @@
-.player{
-    height: 100vh;
+.player {
+    height: 100vh; /* Occupy full viewport height */
+    width: 100vw;  /* Occupy full viewport width */
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center;     /* Center content horizontally */
+    background-color: black; /* Cinematic background for full-screen feel */
+    position: relative; /* Needed for absolute positioning of header/back button */
+    overflow: hidden; /* Hide any overflow */
+}
+
+.player-header {
+    position: absolute; /* Position relative to .player */
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between back arrow and title */
+    z-index: 100; /* Ensure it's above the iframe */
+    color: white; /* Make header text visible on black background */
+}
+
+.player-header img {
+    width: 80px; /* Keep original size for the back arrow */
+    cursor: pointer;
+}
+
+.player-header h2 {
+    margin: 0; /* Remove default margin */
+    font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.video-container {
+    width: 100%; /* Occupy full width of .player */
+    height: 100%; /* Occupy full height of .player */
+    display: flex; /* Use flex to center the iframe */
     justify-content: center;
     align-items: center;
 }
 
-.player img{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 50px;
-    cursor: pointer;
+.video-container iframe {
+    border-radius: 10px; /* Keep border-radius */
+    width: 100%; /* Occupy full width of .video-container */
+    height: 100%; /* Occupy full height of .video-container */
+    object-fit: contain; /* Ensures the video fits within the iframe maintaining aspect ratio */
+    max-width: 100vw; /* Safety measure to prevent horizontal scroll */
+    max-height: 100vh; /* Safety measure to prevent vertical scroll */
 }
 
-.player iframe{
-    border-radius: 10px;
-}
-
-.player-info {
+/* Styles for loading and error states for better user experience */
+.loading-container, .error-message {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    width: 90%;
-}          
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.loading-spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.error-message button:hover {
+    background-color: #c0392b;
+}

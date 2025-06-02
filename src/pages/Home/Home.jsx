@@ -32,19 +32,7 @@ const Home = () => {
   const upcomingRef = useRef(null);
   const topPicksRef = useRef(null);
 
-  // Map section names to their refs for easy access
-  const sectionRefs = useRef({
-    hero: heroRef,
-    ai: aiSectionRef,
-    blockbuster: blockbusterRef,
-    netflix: netflixRef,
-    upcoming: upcomingRef,
-    top_picks: topPicksRef,
-  });
-
-  // Define the order of sections for vertical navigation
-  const sectionOrder = useRef(['hero', 'ai', 'blockbuster', 'netflix', 'upcoming', 'top_picks']);
-
+  
   const TMDB_API_OPTIONS = {
     method: 'GET',
     headers: {
@@ -190,116 +178,22 @@ const Home = () => {
     }
   };
 
-  // Callback to update the last focused card index from TitleCards components
-  const updateLastFocusedCard = useCallback((section, index) => {
-    setLastFocusedCardIndexes(prev => ({ ...prev, [section]: index }));
-  }, []);
-
-  // --- Keyboard Navigation Logic for Home Component (Vertical Navigation) ---
-  const handleKeyDown = useCallback((e) => {
-    const currentSectionIndex = sectionOrder.current.indexOf(focusedSection);
-    let nextSection = focusedSection;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        if (currentSectionIndex < sectionOrder.current.length - 1) {
-          let potentialNextIndex = currentSectionIndex + 1;
-          // Skip AI section if no movies are available
-          if (sectionOrder.current[potentialNextIndex] === 'ai' && aiSuggestedMovieTitles.length === 0) {
-            potentialNextIndex++; // Skip to the next section
-          }
-          if (potentialNextIndex < sectionOrder.current.length) {
-            nextSection = sectionOrder.current[potentialNextIndex];
-          }
-        }
-        break;
-      case 'ArrowUp':
-        if (currentSectionIndex > 0) {
-          let potentialPrevIndex = currentSectionIndex - 1;
-          // Skip AI section if no movies are available
-          if (sectionOrder.current[potentialPrevIndex] === 'ai' && aiSuggestedMovieTitles.length === 0) {
-            potentialPrevIndex--; // Skip to the previous section
-          }
-          if (potentialPrevIndex >= 0) {
-            nextSection = sectionOrder.current[potentialPrevIndex];
-          }
-        }
-        break;
-      case 'Enter':
-        // If on the hero section, simulate a click on the "Play Now" button
-        if (focusedSection === 'hero' && heroRef.current) {
-          const playButton = heroRef.current.querySelector('.hero-btns .btn');
-          if (playButton) {
-            playButton.click();
-            e.preventDefault(); // Prevent default browser behavior
-          }
-        }
-        return;
-      case 'ArrowLeft':
-      case 'ArrowRight':
-        if (focusedSection !== 'hero') {
-          return;
-        }
-        break;
-      default:
-        return;
-    }
-
-    if (nextSection !== focusedSection) {
-      setFocusedSection(nextSection);
-      setTimeout(() => {
-        sectionRefs.current[nextSection]?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 0);
-      e.preventDefault();
-    }
-  }, [focusedSection, navigate, heroMovie, aiSuggestedMovieTitles.length]);
-
-  // Add and remove global keydown event listener
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [handleKeyDown]);
-
-  // Effect to focus the appropriate element when `focusedSection` changes.
-  useEffect(() => {
-    const currentSectionRef = sectionRefs.current[focusedSection];
-    if (currentSectionRef && currentSectionRef.current) {
-      if (focusedSection === 'hero') {
-        const playButton = currentSectionRef.current.querySelector('.hero-btns .btn');
-        if (playButton) {
-          playButton.focus();
-        } else {
-          currentSectionRef.current.focus();
-        }
-      } else {
-        const initialFocusIndex = lastFocusedCardIndexes[focusedSection] || 0;
-        if (currentSectionRef.current.focus) {
-          currentSectionRef.current.focus(initialFocusIndex);
-        }
-      }
-    }
-  }, [focusedSection, loading, lastFocusedCardIndexes]);
-
   return (
     <div className='Home'>
       <Navbar onSuggestMovies={handleAISuggestionRequest} />
 
       {loading ? (
-        <div className="hero loading" ref={heroRef} tabIndex={focusedSection === 'hero' ? 0 : -1}>
+        <div className="hero loading" ref={heroRef} >
           <div className="loading-spinner"></div>
         </div>
       ) : error ? (
-        <div className="hero error" ref={heroRef} tabIndex={focusedSection === 'hero' ? 0 : -1}>
+        <div className="hero error" ref={heroRef}>
           <p>{error}</p>
         </div>
       ) : (
         <div
           className="hero"
           ref={heroRef}
-          tabIndex={focusedSection === 'hero' ? 0 : -1}
-          onFocus={() => setFocusedSection('hero')}
           role="region"
           aria-label="Hero Movie Banner"
         >
@@ -367,9 +261,6 @@ const Home = () => {
             title={"AI Recommended Movies"}
             movieTitles={aiSuggestedMovieTitles}
             sectionId="ai"
-            isActive={focusedSection === 'ai'}
-            setFocusedSection={setFocusedSection}
-            onFocusChange={updateLastFocusedCard}
             ref={aiSectionRef}
           />
         )}
@@ -378,36 +269,24 @@ const Home = () => {
           title={"Blockbuster Movies"}
           category={"top_rated"}
           sectionId="blockbuster"
-          isActive={focusedSection === 'blockbuster'}
-          setFocusedSection={setFocusedSection}
-          onFocusChange={updateLastFocusedCard}
           ref={blockbusterRef}
         />
         <TitleCards
           title={"Only on Netflix"}
           category={"popular"}
           sectionId="netflix"
-          isActive={focusedSection === 'netflix'}
-          setFocusedSection={setFocusedSection}
-          onFocusChange={updateLastFocusedCard}
           ref={netflixRef}
         />
         <TitleCards
           title={"Upcoming Movies"}
           category={"upcoming"}
           sectionId="upcoming"
-          isActive={focusedSection === 'upcoming'}
-          setFocusedSection={setFocusedSection}
-          onFocusChange={updateLastFocusedCard}
           ref={upcomingRef}
         />
         <TitleCards
           title={"Top Picks for You"}
           category={"now_playing"}
           sectionId="top_picks"
-          isActive={focusedSection === 'top_picks'}
-          setFocusedSection={setFocusedSection}
-          onFocusChange={updateLastFocusedCard}
           ref={topPicksRef}
         />
       </div>

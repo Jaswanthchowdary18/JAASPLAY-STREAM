@@ -6,7 +6,7 @@
 }
 
 .hero-section {
-    position: relative; 
+    position: relative;
     overflow: hidden; /* Important for containing the backdrop and its blur/gradient */
     padding-bottom: 40px; /* Space below the movie info before next sections */
     background-color: #141414; /* Default background for this section */
@@ -21,7 +21,6 @@
     background-size: cover;
     background-position: center;
     z-index: 0; /* Keep it behind content, but relative to its parent */
-    /* Add a blur effect if you want, as it will now be contained */
     /* filter: blur(8px); */
 }
 
@@ -64,22 +63,21 @@
 .movie-main {
     display: flex;
     gap: 40px;
-    /* margin-bottom: 40px; This margin is now handled by .hero-section padding-bottom */
 }
 
 .movie-poster {
     flex: 0 0 300px;
     border-radius: 8px;
-    overflow: hidden; 
+    overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    aspect-ratio: 2 / 3; 
+    aspect-ratio: 2 / 3;
 }
 
 .movie-poster img {
     width: 100%;
-    height: 100%; 
+    height: 100%;
     display: block;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .movie-info {
@@ -191,7 +189,7 @@
 }
 
 .cast-member {
-    flex: 0 0 120px;
+    flex: 0 0 120px; /* Base size for cast members */
     text-align: center;
 }
 
@@ -217,9 +215,8 @@
 .recommendations-section,
 .related-section {
     margin-top: 40px;
-    /* Crucial: Add a solid background color to these sections */
-    background-color: #141414; 
-    padding: 20px 40px; /* Add some padding to these sections */
+    background-color: #141414;
+    padding: 20px 40px;
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
@@ -244,11 +241,11 @@
 }
 
 .recommendation-card {
-    flex: 0 0 150px; 
-    width: 150px; 
+    flex: 0 0 150px; /* Base size for recommendation cards */
+    width: 150px;
     cursor: pointer;
     transition: transform 0.3s ease;
-    border-radius: 8px; 
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
 }
@@ -259,29 +256,28 @@
 
 .recommendation-card img {
     width: 100%;
-    height: 225px;
+    height: 225px; /* Base height for recommendation card images */
     display: block;
-    object-fit: cover; 
+    object-fit: cover;
     border-radius: 8px;
 }
 
-
 .recommendation-info {
-    margin-top: 8px; 
-    flex-grow: 1; 
-    padding: 0 5px; 
+    margin-top: 8px;
+    flex-grow: 1;
+    padding: 0 5px;
     overflow: hidden;
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .recommendation-info p {
     margin: 0;
     font-size: 0.9rem;
-    white-space: nowrap; 
-    overflow: hidden;    
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 3px; 
+    margin-bottom: 3px;
 }
 
 .recommendation-info span {
@@ -292,13 +288,12 @@
     opacity: 0.8;
 }
 
-
 .loading-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #141414; /* Ensure loading screen has a background */
+    background-color: #141414;
 }
 
 .loading-spinner {
@@ -335,27 +330,283 @@
     cursor: pointer;
 }
 
+/* --- Responsive Styles --- */
+
+/* For screens up to 1024px (Tablets, smaller desktops) */
+@media (max-width: 1024px) {
+    .movie-content {
+        padding: 50px 30px;
+    }
+
+    .movie-header h1 {
+        font-size: 2rem; /* Reduced title size */
+    }
+
+    .movie-meta, .genres span {
+        font-size: 0.85rem; /* Slightly smaller meta and genre text */
+    }
+
+    .movie-description {
+        font-size: 1rem; /* Reduced description font size */
+    }
+
+    .play-button, .trailer-button, .watchlist-button {
+        padding: 8px 18px; /* Slightly smaller buttons */
+        font-size: 0.9rem;
+    }
+
+    .recommendations-section h3,
+    .related-section h3 {
+        font-size: 1.3rem; /* Smaller section titles */
+    }
+
+    .recommendation-card {
+        flex: 0 0 130px; /* Smaller recommendation cards */
+        width: 130px;
+    }
+
+    .recommendation-card img {
+        height: 195px; /* Adjust image height proportionally */
+    }
+
+    .recommendation-info p {
+        font-size: 0.85rem;
+    }
+
+    .recommendation-info span {
+        font-size: 0.75rem;
+    }
+}
+
+/* For screens up to 768px (Larger phones, small tablets) */
 @media (max-width: 768px) {
     .movie-main {
         flex-direction: column;
+        gap: 30px; /* Reduced gap */
     }
 
     .movie-poster {
         flex: 0 0 auto;
-        width: 60%;
+        width: 70%; /* Poster takes more width, but centered */
         margin: 0 auto;
     }
 
     .movie-content {
-        padding: 40px 20px;
+        padding: 40px 20px; /* Reduced padding */
+    }
+
+    .movie-header {
+        flex-direction: column; /* Stack title and certification */
+        align-items: flex-start; /* Align to left */
+        gap: 10px;
+    }
+
+    .movie-header h1 {
+        font-size: 1.8rem; /* Further reduced title size */
+    }
+
+    .movie-meta {
+        flex-wrap: wrap; /* Allow meta items to wrap */
+        gap: 10px; /* Smaller gap */
+        font-size: 0.8rem;
+    }
+
+    .genres {
+        flex-wrap: wrap; /* Allow genres to wrap */
+        gap: 8px;
+    }
+
+    .genres span {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+
+    .movie-description {
+        font-size: 0.9rem; /* Further reduced description font size */
     }
 
     .action-buttons {
-        flex-wrap: wrap;
+        flex-wrap: wrap; /* Allow buttons to wrap */
+        gap: 10px; /* Smaller gap */
+        margin: 20px 0;
+    }
+
+    .play-button, .trailer-button, .watchlist-button {
+        padding: 8px 15px; /* Smaller buttons */
+        font-size: 0.85rem;
+        flex-grow: 1; /* Allow buttons to grow to fill space */
+        justify-content: center; /* Center text in buttons */
+    }
+
+    .cast-scroller {
+        gap: 15px; /* Smaller gap in cast scroller */
+        padding: 15px 0;
+    }
+
+    .cast-member {
+        flex: 0 0 100px; /* Smaller cast member cards */
+        width: 100px;
+    }
+
+    .cast-member img {
+        width: 85%; /* Adjust image size within card */
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+
+    .cast-info {
+        font-size: 0.8rem; /* Smaller cast info font */
+    }
+
+    .cast-info small {
+        font-size: 0.7rem;
     }
 
     .recommendations-section,
     .related-section {
-        padding: 20px 20px; /* Adjust padding for smaller screens */
+        padding: 20px 20px;
+        margin-top: 30px;
+    }
+
+    .recommendations-section h3,
+    .related-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .recommendations-scroller {
+        gap: 10px; /* Smaller gap in recommendations scroller */
+    }
+
+    .recommendation-card {
+        flex: 0 0 110px; /* Even smaller recommendation cards */
+        width: 110px;
+    }
+
+    .recommendation-card img {
+        height: 165px; /* Adjust image height proportionally */
+    }
+
+    .recommendation-info p {
+        font-size: 0.8rem;
+    }
+
+    .recommendation-info span {
+        font-size: 0.7rem;
+    }
+}
+
+/* For screens up to 480px (Very small phones) */
+@media (max-width: 480px) {
+    .movie-content {
+        padding: 30px 15px; /* Much smaller padding */
+    }
+
+    .back-button {
+        padding: 6px 12px;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .movie-poster {
+        width: 80%; /* Poster takes more width on very small screens */
+    }
+
+    .movie-header h1 {
+        font-size: 1.5rem; /* Smallest title size */
+    }
+
+    .certification {
+        font-size: 0.8rem;
+        padding: 1px 8px;
+    }
+
+    .movie-meta {
+        flex-direction: column; /* Stack meta items */
+        align-items: flex-start;
+        gap: 5px;
+        font-size: 0.75rem;
+    }
+
+    .genres {
+        flex-direction: column; /* Stack genres */
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .genres span {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+
+    .movie-description {
+        font-size: 0.85rem; /* Smallest description font size */
+    }
+
+    .action-buttons {
+        flex-direction: column; /* Stack all action buttons */
+        gap: 8px;
+        margin: 15px 0;
+    }
+
+    .play-button, .trailer-button, .watchlist-button {
+        padding: 10px; /* Uniform padding for stacked buttons */
+        font-size: 0.8rem;
+        width: 100%; /* Make buttons full width when stacked */
+    }
+
+    .cast-scroller {
+        gap: 10px; /* Even smaller gap for cast */
+        padding: 10px 0;
+    }
+
+    .cast-member {
+        flex: 0 0 80px; /* Smallest cast member cards */
+        width: 80px;
+    }
+
+    .cast-member img {
+        width: 80%; /* Adjust image size within card */
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+
+    .cast-info {
+        font-size: 0.75rem; /* Smallest cast info font */
+    }
+
+    .cast-info small {
+        font-size: 0.65rem;
+    }
+
+    .recommendations-section,
+    .related-section {
+        padding: 15px; /* Smallest section padding */
+        margin-top: 20px;
+    }
+
+    .recommendations-section h3,
+    .related-section h3 {
+        font-size: 1rem; /* Smallest section titles */
+    }
+
+    .recommendations-scroller {
+        gap: 8px; /* Smallest gap in recommendations scroller */
+    }
+
+    .recommendation-card {
+        flex: 0 0 90px; /* Smallest recommendation cards */
+        width: 90px;
+    }
+
+    .recommendation-card img {
+        height: 135px; /* Adjust image height proportionally */
+    }
+
+    .recommendation-info p {
+        font-size: 0.75rem;
+    }
+
+    .recommendation-info span {
+        font-size: 0.65rem;
     }
 }

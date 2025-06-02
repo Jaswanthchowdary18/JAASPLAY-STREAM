@@ -90,6 +90,7 @@ const Player = () => {
           <iframe
             width='100%'
             height='100%'
+            // Corrected YouTube embed URL:
             src={`https://www.youtube.com/embed/${videoData.key}?autoplay=1&rel=0&modestbranding=1`}
             title={videoData.name}
             frameBorder='0'

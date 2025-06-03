@@ -112,8 +112,8 @@
 }
 
 .profile-initials {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: linear-gradient(135deg, #e50914, #ff4d4d);
     color: white;

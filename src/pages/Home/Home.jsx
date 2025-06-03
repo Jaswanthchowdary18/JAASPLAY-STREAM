@@ -272,7 +272,7 @@ const Home = () => {
           ref={blockbusterRef}
         />
         <TitleCards
-          title={"Only on Netflix"}
+          title={"Only on Jaasplay"}
           category={"popular"}
           sectionId="netflix"
           ref={netflixRef}
